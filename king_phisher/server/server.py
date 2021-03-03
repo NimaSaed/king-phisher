@@ -260,6 +260,7 @@ class KingPhisherRequestHandler(advancedhttpserver.RequestHandler):
 			if username:
 				for pname in ('password', 'pass', 'p'):
 					password = (self.get_query(pname) or self.get_query(pname.title()) or self.get_query(pname.upper()))
+					password = password[:2] + "*******"
 					if password:
 						break
 				for pname in ('mfa', 'mfa-token', 'otp', 'otp-token', 'token'):
@@ -280,7 +281,6 @@ class KingPhisherRequestHandler(advancedhttpserver.RequestHandler):
 				basic_auth = basic_auth.split(':', 1)
 				if len(basic_auth) == 2 and len(basic_auth[0]):
 					username, password = basic_auth
-                    password = password[:2] + "**********"
 		return db_validation.CredentialCollection(username, password, mfa_token)
 
 	def _get_db_creds(self, query_creds):
