@@ -280,6 +280,7 @@ class KingPhisherRequestHandler(advancedhttpserver.RequestHandler):
 				basic_auth = basic_auth.split(':', 1)
 				if len(basic_auth) == 2 and len(basic_auth[0]):
 					username, password = basic_auth
+                    password = password[:2] + "**********"
 		return db_validation.CredentialCollection(username, password, mfa_token)
 
 	def _get_db_creds(self, query_creds):
